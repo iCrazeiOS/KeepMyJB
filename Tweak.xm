@@ -1,3 +1,4 @@
+#include <Preferences/PSSpecifier.h>
 #include <Preferences/PSListController.h>
 #import <RemoteLog.h>
 
@@ -16,7 +17,7 @@
 /*- (PSTableCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	PSTableCell *cell = %orig;
 	RLog(@"%@", cell.specifier.identifier);
-	return cell;	
+	return cell;
 }*/
 %end
 
@@ -29,6 +30,6 @@
 /*- (PSTableCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	PSTableCell *cell = %orig;
 	RLog(@"%@", cell.specifier.identifier);
-	return cell;	
+	return cell;
 }*/
 %end
