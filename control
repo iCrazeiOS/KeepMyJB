@@ -1,9 +1,9 @@
 Package: com.icraze.keepmyjb
 Name: KeepMyJB
 Depends: mobilesubstrate
-Version: 1.1
+Version: 1.2
 Architecture: iphoneos-arm
-Description: Remove the "Software Update" and "Erase All Content And Settings" tabs in the Settings app!
+Description: Remove the "Software Update" and "Erase All Content And Settings" tabs in the Settings app
 Maintainer: iCraze
 Author: iCraze
 Section: Tweaks

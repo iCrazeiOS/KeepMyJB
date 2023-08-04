@@ -1,6 +1,5 @@
 #include <Preferences/PSSpecifier.h>
 #include <Preferences/PSListController.h>
-#import <RemoteLog.h>
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
@@ -8,6 +7,9 @@
 @end
 
 @interface PSGResetPrefController : PSListController
+@end
+
+@interface PSGResetPrefChildViewController : PSListController
 @end
 
 @interface PSUIGeneralController : PSListController
@@ -30,17 +32,18 @@
 	}*/
 	%end
 
-	%hook PSGResetPrefController
+	%hook PSGResetPrefController // iOS 13-14
 	-(void)viewWillAppear:(BOOL)arg1 {
 		%orig;
 		[self removeSpecifierID:@"fullErase" animated:NO];
 	}
+	%end
 
-	/*- (PSTableCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-		PSTableCell *cell = %orig;
-		RLog(@"%@", cell.specifier.identifier);
-		return cell;
-	}*/
+	%hook PSGResetPrefChildViewController // iOS 15+
+	-(void)viewWillAppear:(BOOL)arg1 {
+		%orig;
+		[self removeSpecifierID:@"fullErase" animated:NO];
+	}
 	%end
 %end
 
@@ -50,12 +53,6 @@
 		%orig;
 		[self removeSpecifierID:@"SOFTWARE_UPDATE_LINK" animated:NO];
 	}
-
-	/*- (PSTableCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-		PSTableCell *cell = %orig;
-		RLog(@"%@", cell.specifier.identifier);
-		return cell;
-	}*/
 	%end
 
 	%hook PSUIResetPrefController
@@ -63,19 +60,10 @@
 		%orig;
 		[self removeSpecifierID:@"fullErase" animated:NO];
 	}
-
-	/*- (PSTableCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-		PSTableCell *cell = %orig;
-		RLog(@"%@", cell.specifier.identifier);
-		return cell;
-	}*/
 	%end
 %end
 
 %ctor {
-	if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.0")) {
-		%init(iOS13);
-	} else {
-		%init(iOS12);
-	}
+	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.0")) %init(iOS13);
+	else %init(iOS12);
 }
